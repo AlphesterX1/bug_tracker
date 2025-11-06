@@ -74,6 +74,19 @@ def report_new_issue(connection, project_id, reported_by_user_id, title, descrip
         return None
     finally:
         cursor.close()
+ #update
+def update_issue_status(self, issue_id: int, status: str):
+        if status not in ('Open', 'In Progress', 'Closed'):
+            print(f"Invalid status: {status}. Must be 'Open', 'In Progress', or 'Closed'.")
+            return
+        query = "UPDATE Issues SET status = ? WHERE issue_id = ?"
+        self._execute_query(query, (status, issue_id))
+        print(f"-> Updated issue {issue_id} status to '{status}'")
+
+    def assign_issue(self, issue_id: int, assigned_to_user_id: int):
+        query = "UPDATE Issues SET assigned_to_user_id = ? WHERE issue_id = ?"
+        self._execute_query(query, (assigned_to_user_id, issue_id))
+        print(f"-> Assigned issue {issue_id} to user {assigned_to_user_id}")
 
 def add_comment_to_issue(connection, issue_id, user_id, body):
     """Adds a new comment to the Comments table."""
@@ -89,8 +102,9 @@ def add_comment_to_issue(connection, issue_id, user_id, body):
         return None
     finally:
         cursor.close()
-
+#end update
 
 if cnx and cnx.is_connected():
     cnx.close()
+
     print("MySQL connection is closed.")
