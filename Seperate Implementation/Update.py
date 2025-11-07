@@ -1,6 +1,6 @@
 #-- UPDATE --#
 def update_issue_status(connection):
-    """CLI wrapper to update an issue's status."""
+    
     try:
         issue_id = int(input("Enter Issue ID to update: "))
     except ValueError:
@@ -29,7 +29,7 @@ def update_issue_status(connection):
         cursor.close()
 
 def assign_issue(connection):
-    """CLI wrapper to assign an issue to a user."""
+    
     view_all_users(connection)
     try:
         issue_id = int(input("Enter Issue ID to assign: "))
@@ -51,3 +51,4 @@ def assign_issue(connection):
         print(f"The error '{e}' occurred. Check if issue ID and user ID are valid.")
     finally:
         cursor.close()
+
